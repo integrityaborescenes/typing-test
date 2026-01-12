@@ -11,6 +11,18 @@
     font-family: var(--main-font);
     color: var(--smoky-white-color);
     user-select: none;
+
+    .error {
+      color: var(--smoky-red-color);
+    }
+
+    .true {
+      color: var(--smoky-green-color);
+    }
+
+    .default {
+      color: var(--smoky-white-color);
+    }
   }
 
   .textArea {
@@ -18,13 +30,16 @@
     left: 0;
     width: 100%;
     height: 100%;
-    word-break: normal;
+    overflow: hidden;
     line-height: 1.25;
     position: absolute;
     border: none;
     background-color: transparent;
     outline: none;
     font-size: 20px;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    opacity: 0;
     user-select: none;
     resize: none;
     font-family: var(--main-font);
