@@ -4,7 +4,7 @@ import { type ChangeEvent, useState } from "react";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
-  let text = data?.[0].toLowerCase().split("") || [];
+  let text = data?.[0].replace(/\s+/g, " ").split("") || [];
   let lastWord = text.lastIndexOf(" ", 250);
   let filteredText = text.slice(0, lastWord);
 
