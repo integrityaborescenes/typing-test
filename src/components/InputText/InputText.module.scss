@@ -11,6 +11,7 @@
     font-family: var(--main-font);
     color: var(--smoky-white-color);
     user-select: none;
+    white-space: pre-wrap;
 
     .error {
       color: var(--smoky-red-color);
@@ -42,8 +43,6 @@
     background-color: transparent;
     outline: none;
     font-size: 25px;
-    white-space: pre-wrap;
-    word-wrap: break-word;
     user-select: none;
     opacity: 0;
     resize: none;
