@@ -1,6 +1,7 @@
 .container {
   max-width: 50%;
-  margin: 0 auto;
+  min-height: 156px;
+  margin: auto auto;
   position: relative;
 }
 .container .text {
@@ -17,7 +18,7 @@
   color: var(--smoky-red-color);
 }
 .container .text .true {
-  color: var(--smoky-green-color);
+  color: var(--smoky-blue-color);
 }
 .container .text .default {
   color: var(--smoky-white-color);

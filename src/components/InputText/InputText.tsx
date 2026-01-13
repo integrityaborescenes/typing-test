@@ -32,15 +32,13 @@ const InputText = () => {
     countErrors();
   }, [value]);
 
-  console.log(errors);
-
   return (
     <div className={styles.container}>
       <div className={styles.text}>
         {filteredText.map((t, i) => (
           <span
             key={i}
-            className={`${value[i - 1] && !value[i] ? styles.markCurrent : ""} ${!value[i] ? "" : value[i] !== t ? styles.error : styles.true}`}
+            className={`${value.length === i ? styles.markCurrent : ""} ${!value[i] ? "" : value[i] !== t ? styles.error : styles.true}`}
           >
             {t}
           </span>

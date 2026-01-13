@@ -3,5 +3,9 @@
 @import 'normalize.css';
 
 body {
+    min-height: 100vh;
     background-color: var(--graphit-color);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
