@@ -3,26 +3,25 @@ import { topRowKeys } from "../../utils/keyboardKeys.ts";
 import { middleRowKeys } from "../../utils/keyboardKeys.ts";
 import { bottomRowKeys } from "../../utils/keyboardKeys.ts";
 import { useEffect, useState } from "react";
+import Key from "../Key/Key.tsx";
 
 const Keyboard = () => {
-  const [pressedKeyButton, setPressedKeyButton] = useState<string>("");
+  const [pressedKeyButton, setPressedKeyButton] = useState<string[]>([]);
 
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       const key = e.key.toLowerCase();
-      setPressedKeyButton(key);
-    };
 
-    const handleKeyUp = () => {
-      setPressedKeyButton("");
+      setPressedKeyButton((prev) => [...prev, key].slice(-12));
+      setTimeout(() => {
+        setPressedKeyButton((prev) => prev.filter((k) => k !== key));
+      }, 300);
     };
 
     window.addEventListener("keydown", handleKeyDown);
-    window.addEventListener("keyup", handleKeyUp);
 
     return () => {
       window.removeEventListener("keydown", handleKeyDown);
-      window.removeEventListener("keyup", handleKeyUp);
     };
   }, []);
 
@@ -31,36 +30,9 @@ const Keyboard = () => {
   return (
     <div className={styles.keyboardContainer}>
       <div className={styles.keyboard}>
-        <div className={styles.row}>
-          {topRowKeys.map((keys, i) => (
-            <button
-              className={`${pressedKeyButton === keys.label ? styles.buttonPress : ""}`}
-              key={i}
-            >
-              {keys.label}
-            </button>
-          ))}
-        </div>
-        <div className={styles.row}>
-          {middleRowKeys.map((keys, i) => (
-            <button
-              className={`${pressedKeyButton === keys.label ? styles.buttonPress : ""}`}
-              key={i}
-            >
-              {keys.label}
-            </button>
-          ))}
-        </div>
-        <div className={styles.row}>
-          {bottomRowKeys.map((keys, i) => (
-            <button
-              className={`${pressedKeyButton === keys.label ? styles.buttonPress : ""}`}
-              key={i}
-            >
-              {keys.label}
-            </button>
-          ))}
-        </div>
+        <Key keys={topRowKeys} keyPressed={pressedKeyButton} />
+        <Key keys={middleRowKeys} keyPressed={pressedKeyButton} />
+        <Key keys={bottomRowKeys} keyPressed={pressedKeyButton} />
         <div className={styles.spaceButton}></div>
       </div>
     </div>
