@@ -1,6 +1,6 @@
 import styles from "./InputText.module.scss";
 import { useGetTextQuery } from "../../store/services/text.api.ts";
-import { type ChangeEvent, useEffect, useState } from "react";
+import { type ChangeEvent, useEffect, useRef, useState } from "react";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
@@ -10,6 +10,7 @@ const InputText = () => {
 
   const [value, setValue] = useState<string[]>([]);
   const [errors, setErrors] = useState<number>(0);
+  const maxIndex = useRef<number>(0);
 
   const typingText = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let currentValue = e.target.value;
@@ -17,9 +18,13 @@ const InputText = () => {
   };
 
   const countErrors = () => {
-    if (value[value.length - 1] !== filteredText[value.length - 1]) {
+    maxIndex.current = Math.max(maxIndex.current, value.length);
+
+    if (
+      value[value.length - 1] !== filteredText[value.length - 1] &&
+      maxIndex.current === value.length
+    ) {
       setErrors((prev) => prev + 1);
-      console.log(value[value.length - 1], filteredText[value.length - 1]);
     }
   };
 
