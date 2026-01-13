@@ -25,15 +25,15 @@ const Keyboard = () => {
     };
   }, []);
 
-  console.log(pressedKeyButton);
-
   return (
     <div className={styles.keyboardContainer}>
       <div className={styles.keyboard}>
         <Key keys={topRowKeys} keyPressed={pressedKeyButton} />
         <Key keys={middleRowKeys} keyPressed={pressedKeyButton} />
         <Key keys={bottomRowKeys} keyPressed={pressedKeyButton} />
-        <div className={styles.spaceButton}></div>
+        <div
+          className={`${styles.spaceButton} ${pressedKeyButton.includes(" ") ? styles.buttonPress : ""}`}
+        ></div>
       </div>
     </div>
   );

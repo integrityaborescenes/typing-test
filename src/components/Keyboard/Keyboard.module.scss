@@ -17,6 +17,25 @@
       border-radius: 3px;
       outline: 0;
       background-color: transparent;
+
+      @keyframes pressAnimation {
+        0% {
+          transform: scale(1);
+          background-color: transparent;
+        }
+        50% {
+          transform: scale(0.98);
+          background-color: var(--smoky-blue-color);
+        }
+        100% {
+          transform: scale(1);
+          background-color: transparent;
+        }
+      }
+
+      &.buttonPress {
+        animation: pressAnimation 0.3s forwards;
+      }
     }
 
   }
