@@ -31,7 +31,7 @@ const Timer = () => {
           clearInterval(timerId);
           return 0;
         }
-        return prev - 1;
+        return prev - 10;
       });
     }, 1000);
 
@@ -60,9 +60,18 @@ const Timer = () => {
           60s
         </button>
       </div>
-      <div className={styles.timer}>{`${timeLeft}`}</div>
+      <div className={styles.timer}>
+        {`${timeLeft > 59 ? "01:00" : timeLeft === 0 ? `00:0${timeLeft}` : `00:${timeLeft}`}`}
+      </div>
       <div className={styles.resetButton}>
-        <button>Reset</button>
+        <button
+          onClick={() => {
+            dispatch(stop());
+            setTimeLeft(selectedTimer);
+          }}
+        >
+          Reset
+        </button>
       </div>
     </div>
   );
