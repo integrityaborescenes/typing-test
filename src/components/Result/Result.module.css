@@ -5,14 +5,14 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  animation: blur-bg 1s forwards;
+  animation: blur-bg 0.5s forwards;
 }
 .resultCont .result {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  animation: fade-in 1.3s forwards;
+  animation: fade-in 0.8s forwards;
 }
 .resultCont .result p {
   padding: 0;
@@ -30,7 +30,7 @@
     backdrop-filter: blur(0px);
   }
   to {
-    backdrop-filter: blur(6px);
+    backdrop-filter: blur(5px);
   }
 }
 @keyframes fade-in {

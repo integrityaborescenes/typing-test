@@ -18,6 +18,7 @@ const InputText = () => {
   const dispatch = useDispatch<AppDispatch>();
 
   const [value, setValue] = useState<string[]>([]);
+  const [accuracy, setAccuracy] = useState<number>(0);
   const [errors, setErrors] = useState<number>(0);
   const maxIndex = useRef<number>(0);
 
@@ -40,6 +41,8 @@ const InputText = () => {
   }, [selectedTimer]);
 
   const typingText = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    if (isUserEnd) return;
+
     let currentValue = e.target.value;
 
     if (currentValue.split("").length === filteredText.length) {
@@ -72,6 +75,9 @@ const InputText = () => {
     ) {
       setErrors((prev) => prev + 1);
     }
+    setAccuracy(
+      (Math.round(maxIndex.current - errors) / maxIndex.current) * 100,
+    );
   };
 
   useEffect(() => {
@@ -96,7 +102,7 @@ const InputText = () => {
         autoFocus
         onChange={typingText}
       />
-      {isUserEnd && <Result errors={errors} />}
+      {isUserEnd && <Result errors={errors} accuracy={accuracy} />}
     </div>
   );
 };
