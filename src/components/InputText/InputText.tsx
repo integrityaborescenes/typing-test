@@ -17,6 +17,7 @@ const InputText = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const inputRef = useRef<HTMLTextAreaElement>(null);
   const [value, setValue] = useState<string[]>([]);
   const [accuracy, setAccuracy] = useState<number>(0);
   const [wpm, setWpm] = useState<number>(0);
@@ -99,10 +100,12 @@ const InputText = () => {
         ))}
       </div>
       <textarea
+        ref={inputRef}
         className={styles.textArea}
         value={value.join("")}
         autoFocus
         onChange={typingText}
+        onBlur={() => inputRef.current?.focus()}
       />
       {isUserEnd && <Result wpm={wpm} accuracy={accuracy} />}
     </div>

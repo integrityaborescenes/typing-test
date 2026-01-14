@@ -19,6 +19,7 @@
     font-weight: 300;
     line-height: normal;
     color: var(--smoky-white-color);
+    user-select: none;
 
     @keyframes pressAnimation {
       0% {
