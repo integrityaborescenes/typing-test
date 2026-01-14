@@ -4,6 +4,7 @@ import type { AppDispatch, RootState } from "../../store/store.ts";
 import { full, half } from "../../store/slices/timerSelectSlice.ts";
 import { useEffect, useState } from "react";
 import { stop } from "../../store/slices/isUserStartsTypingSlice.ts";
+import { end, notend } from "../../store/slices/isUserEndSlice.ts";
 
 const Timer = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -25,7 +26,7 @@ const Timer = () => {
   }, [selectedTimer]);
 
   useEffect(() => {
-    if (!isUserStarts || timeLeft === 0 || isUserEnd) return;
+    if (!isUserStarts || timeLeft === 0) return;
 
     const timerId = setInterval(() => {
       setTimeLeft((prev) => {
@@ -33,12 +34,16 @@ const Timer = () => {
           clearInterval(timerId);
           return 0;
         }
-        return prev - 1;
+        return prev - 10;
       });
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [isUserStarts, isUserEnd]);
+  }, [isUserStarts]);
+
+  useEffect(() => {
+    if (timeLeft === 0 && isUserStarts) dispatch(end());
+  }, [timeLeft, isUserStarts]);
 
   return (
     <div className={styles.timerCont}>
@@ -48,6 +53,7 @@ const Timer = () => {
           onClick={() => {
             dispatch(half());
             dispatch(stop());
+            dispatch(notend());
           }}
         >
           30s
@@ -57,6 +63,7 @@ const Timer = () => {
           onClick={() => {
             dispatch(full());
             dispatch(stop());
+            dispatch(notend());
           }}
         >
           60s
@@ -71,6 +78,7 @@ const Timer = () => {
         <button
           onClick={() => {
             dispatch(stop());
+            dispatch(notend());
             setTimeLeft(selectedTimer);
           }}
         >
