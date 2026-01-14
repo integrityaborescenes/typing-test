@@ -45,6 +45,24 @@
   font-family: var(--main-font);
   color: var(--smoky-white-color);
 }
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.8;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+.timerCont .timer.ending {
+  animation: pulse 10s forwards;
+  color: var(--smoky-red-color);
+}
 .timerCont .resetButton {
   display: flex;
   flex-direction: row;
