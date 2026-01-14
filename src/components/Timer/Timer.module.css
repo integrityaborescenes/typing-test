@@ -1,6 +1,6 @@
 .timerCont {
   width: 50%;
-  margin: 0 auto 10px;
+  margin: 0 auto 15px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -60,7 +60,7 @@
   }
 }
 .timerCont .timer.ending {
-  animation: pulse 10s forwards;
+  animation: pulse 1s ease 0s 10;
   color: var(--smoky-red-color);
 }
 .timerCont .resetButton {

@@ -7,10 +7,9 @@ import type { AppDispatch, RootState } from "../../store/store.ts";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
-
   const [lengthByTimer, setLengthByTimer] = useState<number>(250);
 
-  let text = data?.[0].replace(/\s+/g, " ").split("") || [];
+  let text = data?.split("") || [];
   let lastWord = text.lastIndexOf(" ", lengthByTimer);
   let filteredText = text.slice(0, lastWord);
 
@@ -30,7 +29,7 @@ const InputText = () => {
 
   useEffect(() => {
     if (selectedTimer === 60) {
-      setLengthByTimer(500);
+      setLengthByTimer(400);
     } else {
       setLengthByTimer(250);
     }
@@ -66,7 +65,7 @@ const InputText = () => {
   useEffect(() => {
     countErrors();
   }, [value]);
-
+  console.log(data);
   return (
     <div className={styles.container}>
       <div className={styles.text}>
