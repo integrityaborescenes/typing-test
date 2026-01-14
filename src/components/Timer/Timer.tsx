@@ -5,8 +5,10 @@ import { full, half } from "../../store/slices/timerSelectSlice.ts";
 import { useEffect, useState } from "react";
 import { stop } from "../../store/slices/isUserStartsTypingSlice.ts";
 import { end, notend } from "../../store/slices/isUserEndSlice.ts";
+import { useGetTextQuery } from "../../store/services/text.api.ts";
 
 const Timer = () => {
+  const { refetch } = useGetTextQuery();
   const dispatch = useDispatch<AppDispatch>();
 
   const selectedTimer = useSelector(
@@ -34,7 +36,7 @@ const Timer = () => {
           clearInterval(timerId);
           return 0;
         }
-        return prev - 1;
+        return prev - 10;
       });
     }, 1000);
 
@@ -77,6 +79,7 @@ const Timer = () => {
       <div className={styles.resetButton}>
         <button
           onClick={() => {
+            refetch();
             dispatch(stop());
             dispatch(notend());
             setTimeLeft(selectedTimer);

@@ -1,5 +1,6 @@
 .resultCont {
   position: absolute;
+  margin: 0 auto;
   width: 100%;
   height: 100%;
   display: flex;
@@ -13,11 +14,13 @@
     align-items: start;
     justify-content: center;
     animation: fade-in 0.8s forwards;
+    gap: 5px;
 
     p {
       padding: 0;
       margin: 0;
       display: flex;
+      line-height: 1;
       align-items: center;
       justify-content: center;
       font-size: 50px;
