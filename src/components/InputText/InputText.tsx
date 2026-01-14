@@ -7,8 +7,11 @@ import type { AppDispatch, RootState } from "../../store/store.ts";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
+
+  const [lengthByTimer, setLengthByTimer] = useState<number>(250);
+
   let text = data?.[0].replace(/\s+/g, " ").split("") || [];
-  let lastWord = text.lastIndexOf(" ", 250);
+  let lastWord = text.lastIndexOf(" ", lengthByTimer);
   let filteredText = text.slice(0, lastWord);
 
   const dispatch = useDispatch<AppDispatch>();
@@ -17,9 +20,21 @@ const InputText = () => {
   const [errors, setErrors] = useState<number>(0);
   const maxIndex = useRef<number>(0);
 
+  const selectedTimer = useSelector(
+    (state: RootState) => state.timerSelectSlice.value,
+  );
+
   const isUserStarts = useSelector(
     (state: RootState) => state.isUserStarts.value,
   );
+
+  useEffect(() => {
+    if (selectedTimer === 60) {
+      setLengthByTimer(500);
+    } else {
+      setLengthByTimer(250);
+    }
+  }, [selectedTimer]);
 
   const typingText = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let currentValue = e.target.value;

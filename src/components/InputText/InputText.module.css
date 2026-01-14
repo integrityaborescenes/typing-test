@@ -1,8 +1,10 @@
 .container {
   max-width: 50%;
-  min-height: 156px;
+  min-height: 220px;
   margin: auto auto;
   position: relative;
+  display: flex;
+  align-items: center;
 }
 .container .text {
   text-align: center;
