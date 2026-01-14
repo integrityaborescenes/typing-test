@@ -19,6 +19,7 @@ const InputText = () => {
 
   const [value, setValue] = useState<string[]>([]);
   const [accuracy, setAccuracy] = useState<number>(0);
+  const [wpm, setWpm] = useState<number>(0);
   const [errors, setErrors] = useState<number>(0);
   const maxIndex = useRef<number>(0);
 
@@ -76,12 +77,13 @@ const InputText = () => {
       setErrors((prev) => prev + 1);
     }
     setAccuracy(
-      (Math.round(maxIndex.current - errors) / maxIndex.current) * 100,
+      Math.round(((maxIndex.current - errors) / maxIndex.current) * 100),
     );
   };
 
   useEffect(() => {
     countErrors();
+    setWpm(Math.round(maxIndex.current / 5 / (selectedTimer / 60)));
   }, [value]);
 
   return (
@@ -102,7 +104,7 @@ const InputText = () => {
         autoFocus
         onChange={typingText}
       />
-      {isUserEnd && <Result errors={errors} accuracy={accuracy} />}
+      {isUserEnd && <Result wpm={wpm} accuracy={accuracy} />}
     </div>
   );
 };

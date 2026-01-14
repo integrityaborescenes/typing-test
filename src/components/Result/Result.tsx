@@ -1,16 +1,16 @@
 import styles from "./Result.module.scss";
 
 type Props = {
-  errors?: number;
+  wpm?: number;
   accuracy?: number;
 };
 
-const Result = ({ errors, accuracy }: Props) => {
+const Result = ({ wpm, accuracy }: Props) => {
   return (
     <div className={styles.resultCont}>
       <div className={styles.result}>
-        <p>{errors}</p>
-        <p>{accuracy}</p>
+        <p>{`${wpm} WPM`}</p>
+        <p>{`${accuracy}% Accuracy`}</p>
       </div>
     </div>
   );

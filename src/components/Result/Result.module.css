@@ -10,7 +10,7 @@
 .resultCont .result {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: start;
   justify-content: center;
   animation: fade-in 0.8s forwards;
 }
