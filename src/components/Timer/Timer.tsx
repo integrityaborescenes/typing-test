@@ -18,12 +18,14 @@ const Timer = () => {
     (state: RootState) => state.isUserStarts.value,
   );
 
+  const isUserEnd = useSelector((state: RootState) => state.isEndSlice.value);
+
   useEffect(() => {
     setTimeLeft(selectedTimer);
   }, [selectedTimer]);
 
   useEffect(() => {
-    if (!isUserStarts || timeLeft === 0) return;
+    if (!isUserStarts || timeLeft === 0 || isUserEnd) return;
 
     const timerId = setInterval(() => {
       setTimeLeft((prev) => {
@@ -36,7 +38,7 @@ const Timer = () => {
     }, 1000);
 
     return () => clearInterval(timerId);
-  }, [isUserStarts]);
+  }, [isUserStarts, isUserEnd]);
 
   return (
     <div className={styles.timerCont}>
@@ -60,7 +62,9 @@ const Timer = () => {
           60s
         </button>
       </div>
-      <div className={`${styles.timer} ${timeLeft < 11 ? styles.ending : ""}`}>
+      <div
+        className={`${styles.timer} ${timeLeft < 11 && !isUserEnd ? styles.ending : ""}`}
+      >
         {`${timeLeft > 59 ? "01:00" : timeLeft < 10 ? `00:0${timeLeft}` : `00:${timeLeft}`}`}
       </div>
       <div className={styles.resetButton}>

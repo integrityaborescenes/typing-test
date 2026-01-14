@@ -4,14 +4,15 @@ import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { start } from "../../store/slices/isUserStartsTypingSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store.ts";
+import { end } from "../../store/slices/isUserEndSlice.ts";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
   const [lengthByTimer, setLengthByTimer] = useState<number>(250);
 
   let text = data?.split("") || [];
-  let lastWord = text.lastIndexOf(" ", lengthByTimer);
-  let filteredText = text.slice(0, lastWord);
+  let lastWord = text.lastIndexOf(".", lengthByTimer);
+  let filteredText = text.slice(0, lastWord + 1);
 
   const dispatch = useDispatch<AppDispatch>();
 
@@ -37,6 +38,11 @@ const InputText = () => {
 
   const typingText = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let currentValue = e.target.value;
+
+    if (currentValue.split("").length === filteredText.length) {
+      dispatch(end());
+      return;
+    }
 
     if (currentValue) {
       dispatch(start());
@@ -65,7 +71,7 @@ const InputText = () => {
   useEffect(() => {
     countErrors();
   }, [value]);
-  console.log(data);
+
   return (
     <div className={styles.container}>
       <div className={styles.text}>
