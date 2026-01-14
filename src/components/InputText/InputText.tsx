@@ -1,6 +1,9 @@
 import styles from "./InputText.module.scss";
 import { useGetTextQuery } from "../../store/services/text.api.ts";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
+import { start } from "../../store/slices/isUserStartsTypingSlice.ts";
+import { useDispatch } from "react-redux";
+import type { AppDispatch } from "../../store/store.ts";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
@@ -8,12 +11,17 @@ const InputText = () => {
   let lastWord = text.lastIndexOf(" ", 250);
   let filteredText = text.slice(0, lastWord);
 
+  const dispatch = useDispatch<AppDispatch>();
+
   const [value, setValue] = useState<string[]>([]);
   const [errors, setErrors] = useState<number>(0);
   const maxIndex = useRef<number>(0);
 
   const typingText = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let currentValue = e.target.value;
+    if (currentValue) {
+      dispatch(start());
+    }
     setValue(currentValue.split(""));
   };
 
