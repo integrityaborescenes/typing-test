@@ -5,6 +5,7 @@ import { start } from "../../store/slices/isUserStartsTypingSlice.ts";
 import { useDispatch, useSelector } from "react-redux";
 import type { AppDispatch, RootState } from "../../store/store.ts";
 import { end } from "../../store/slices/isUserEndSlice.ts";
+import Result from "../Result/Result.tsx";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
@@ -27,6 +28,8 @@ const InputText = () => {
   const isUserStarts = useSelector(
     (state: RootState) => state.isUserStarts.value,
   );
+
+  const isUserEnd = useSelector((state: RootState) => state.isEndSlice.value);
 
   useEffect(() => {
     if (selectedTimer === 60) {
@@ -55,7 +58,10 @@ const InputText = () => {
     if (!isUserStarts) {
       setValue([]);
     }
-  }, [isUserStarts]);
+    if (isUserEnd) {
+      setValue([]);
+    }
+  }, [isUserStarts, isUserEnd]);
 
   const countErrors = () => {
     maxIndex.current = Math.max(maxIndex.current, value.length);
@@ -90,6 +96,7 @@ const InputText = () => {
         autoFocus
         onChange={typingText}
       />
+      {isUserEnd && <Result errors={errors} />}
     </div>
   );
 };
