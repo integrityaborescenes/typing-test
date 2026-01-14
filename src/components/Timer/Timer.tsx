@@ -8,7 +8,7 @@ import { end, notend } from "../../store/slices/isUserEndSlice.ts";
 import { useGetTextQuery } from "../../store/services/text.api.ts";
 
 const Timer = () => {
-  const { refetch } = useGetTextQuery();
+  const { refetch, isLoading } = useGetTextQuery();
   const dispatch = useDispatch<AppDispatch>();
 
   const selectedTimer = useSelector(
@@ -47,6 +47,13 @@ const Timer = () => {
     if (timeLeft === 0 && isUserStarts) dispatch(end());
   }, [timeLeft, isUserStarts]);
 
+  useEffect(() => {
+    if (!isLoading) {
+      dispatch(stop());
+      dispatch(notend());
+    } else return;
+  }, [isLoading]);
+
   return (
     <div className={styles.timerCont}>
       <div className={styles.selectTimer}>
@@ -78,8 +85,8 @@ const Timer = () => {
       </div>
       <div className={styles.resetButton}>
         <button
-          onClick={() => {
-            refetch();
+          onClick={async () => {
+            await refetch();
             dispatch(stop());
             dispatch(notend());
             setTimeLeft(selectedTimer);
