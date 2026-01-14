@@ -2,8 +2,8 @@ import styles from "./InputText.module.scss";
 import { useGetTextQuery } from "../../store/services/text.api.ts";
 import { type ChangeEvent, useEffect, useRef, useState } from "react";
 import { start } from "../../store/slices/isUserStartsTypingSlice.ts";
-import { useDispatch } from "react-redux";
-import type { AppDispatch } from "../../store/store.ts";
+import { useDispatch, useSelector } from "react-redux";
+import type { AppDispatch, RootState } from "../../store/store.ts";
 
 const InputText = () => {
   const { data } = useGetTextQuery();
@@ -17,13 +17,25 @@ const InputText = () => {
   const [errors, setErrors] = useState<number>(0);
   const maxIndex = useRef<number>(0);
 
+  const isUserStarts = useSelector(
+    (state: RootState) => state.isUserStarts.value,
+  );
+
   const typingText = (e: ChangeEvent<HTMLTextAreaElement>) => {
     let currentValue = e.target.value;
+
     if (currentValue) {
       dispatch(start());
     }
+
     setValue(currentValue.split(""));
   };
+
+  useEffect(() => {
+    if (!isUserStarts) {
+      setValue([]);
+    }
+  }, [isUserStarts]);
 
   const countErrors = () => {
     maxIndex.current = Math.max(maxIndex.current, value.length);
@@ -52,7 +64,12 @@ const InputText = () => {
           </span>
         ))}
       </div>
-      <textarea className={styles.textArea} autoFocus onChange={typingText} />
+      <textarea
+        className={styles.textArea}
+        value={value.join("")}
+        autoFocus
+        onChange={typingText}
+      />
     </div>
   );
 };
